@@ -4,6 +4,8 @@ from discord.ext import commands
 from discord import Embed
 import requests
 import json
+import sys
+from graphics.emojis import Emoji
 
 class Testing(commands.Cog):
     def __init__(self, client):
@@ -25,16 +27,18 @@ class Testing(commands.Cog):
         grid_result, add_info = get_last_race()
         last_race_embed = Embed(title = "{}!".format(add_info[1]), description = "Round: {} - {}".format(add_info[0], add_info[2]), colour = 0x19c3e1)
 
+        em = Emoji()
+        emoji_list = em.data
 
         # Top 3 places in Embed 
-        last_race_embed.add_field(name = "{} {}".format(":first_place:", grid_result[0]), value = '\u200b', inline = True)
-        last_race_embed.add_field(name = "{} {}".format(":second_place:", grid_result[1]), value = '\u200b', inline = True)
-        last_race_embed.add_field(name = "{} {}".format(":third_place:", grid_result[2]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} {}".format(":first_place:", grid_result[0], emoji_list[grid_result[0]]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} {}".format(":second_place:", grid_result[1], emoji_list[grid_result[1]]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} {}".format(":third_place:", grid_result[2], emoji_list[grid_result[2]]), value = '\u200b', inline = True)
 
-        # All drivers
+        # Rest of the drivers
         for i in range(1, len(grid_result)+1):
             if i > 3:
-                last_race_embed.add_field(name = "{}. {}".format(i,grid_result[i-1]), value = '\u200b', inline = False)
+                last_race_embed.add_field(name = "{}. {} {}".format(i,grid_result[i-1], emoji_list[grid_result[i-1]]), value = '\u200b', inline = False)
 
         await ctx.send(embed = last_race_embed)
 

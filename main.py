@@ -1,6 +1,34 @@
 import discord
 import os
+from discord.embeds import Embed
 from discord.ext import commands
+
+class CustomHelp(commands.HelpCommand):
+
+    def __init__(self):
+        super().__init__()
+
+    async def send_bot_help(self,mapping):
+        #mapping is a dictionary of cogs and commands
+        help_embed = Embed(title = ":checkered_flag:Command center:checkered_flag:", description = '\u200b', colour = discord.Colour.orange())
+        commands = []
+        for cog in mapping:
+            for command in mapping[cog]:
+                commands.append("!"+command.name)
+        joined = "\n".join(commands)
+        help_embed.add_field(name = 'Available commands', value = joined, inline=False)
+
+        await self.get_destination().send(embed = help_embed)
+
+    async def send_cog_help(self, cog):
+        return await super().send_cog_help(cog)
+
+    async def send_group_help(self, group):
+        return await super().send_group_help(group)
+
+    async def send_command_help(self, command):
+        return await super().send_command_help(command)
+
 
 def read_token():
     with open("token.txt", "r") as file:
@@ -8,7 +36,8 @@ def read_token():
         return lines[0].strip()
 
 TOKEN = read_token()
-client = commands.Bot(command_prefix='!')
+client = commands.Bot(command_prefix='!', help_command=CustomHelp())
+
 
 @client.event
 async def on_ready():
