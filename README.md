@@ -1,6 +1,6 @@
 # Formula 1 Discord Bot 
 
-This project allows you to write commands to discord bot which sends you back the most important information about latest Forumla 1 events inlcuding:
+This project allows you to write commands to discord bot which sends back the most important information about latest Formula 1 events inlcuding:
 * last race results ⟶ !last-race
 * last quailfying results ⟶ !last-quali
 * constructor standings ⟶ !constructor-standings
