@@ -38,6 +38,7 @@ class Standings(commands.Cog):
 def setup(client):
     client.add_cog(Standings(client))
 
+# returns drivers standings
 def get_drivers_standings():
     response = requests.get("http://ergast.com/api/f1/current/driverStandings.json")
     my_json = response.text
@@ -53,6 +54,7 @@ def get_drivers_standings():
         d_standings.append("{} {} ({}) Points: {}".format(name, family_name, constructor_name, points))
     return d_standings
 
+# returns two arrasys 1. constructor standings name 2. points of constructor 
 def get_constructor_standings():
     response = requests.get("http://ergast.com/api/f1/current/constructorStandings.json")
     my_json = response.text

@@ -76,7 +76,7 @@ class RaceInfo(commands.Cog):
 def setup(client):
     client.add_cog(RaceInfo(client))
 
-
+# returns schedule of current year
 def get_schedule():
     response = requests.get("http://ergast.com/api/f1/current.json")
     my_json = response.text
@@ -91,6 +91,7 @@ def get_schedule():
         data[item["round"]] = [country, race_name, race_date, race_time]
     return data
 
+# returns last race finish places plus additional informacion about race 
 def get_last_race():
     response = requests.get("http://ergast.com/api/f1/current/last/results.json")
     my_json = response.text
@@ -110,6 +111,7 @@ def get_last_race():
     
     return grid, race_info
 
+# web scraping times of race, quali, practices from f1 site 
 def get_weekend_timings(race_name):
     URL = "https://www.formula1.com/en/racing/2021/"+race_name+".html"
     #URL = "https://www.formula1.com/en/racing/2021/Great_Britain.html"
@@ -148,7 +150,8 @@ def get_weekend_timings(race_name):
     race_name_ret = soup.find("h2", class_="f1--s").string
 
     return data, race_name_ret
-    
+
+# returns round number for next round 
 def get_next_round():
     response = requests.get("http://ergast.com/api/f1/current/last/results.json")
     my_json = response.text
@@ -158,6 +161,7 @@ def get_next_round():
 
     return round_num
 
+# this method returns name of the country for webscraping f1 site
 def get_schedule_next(round_num):
     round_num = round_num - 1
     response = requests.get("http://ergast.com/api/f1/current.json")
@@ -175,6 +179,7 @@ def get_schedule_next(round_num):
 
     return country_name
 
+# time converting for european time zone 
 def convert_time(time, offset):
     time_num = int(time.split(":")[0])
     offset = int(offset.split(":")[0])
