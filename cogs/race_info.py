@@ -36,14 +36,14 @@ class RaceInfo(commands.Cog):
         emoji_list = em.data
 
         # Top 3 places in Embed 
-        last_race_embed.add_field(name = "{} {} {}".format(":first_place:", grid_result[0], emoji_list[grid_result[0]]), value = '\u200b', inline = True)
-        last_race_embed.add_field(name = "{} {} {}".format(":second_place:", grid_result[1], emoji_list[grid_result[1]]), value = '\u200b', inline = True)
-        last_race_embed.add_field(name = "{} {} {}".format(":third_place:", grid_result[2], emoji_list[grid_result[2]]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} | {}".format(":first_place:", grid_result[0], emoji_list[grid_result[0]]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} | {}".format(":second_place:", grid_result[1], emoji_list[grid_result[1]]), value = '\u200b', inline = True)
+        last_race_embed.add_field(name = "{} {} | {}".format(":third_place:", grid_result[2], emoji_list[grid_result[2]]), value = '\u200b', inline = True)
 
         # Rest of the drivers
         for i in range(1, len(grid_result)+1):
             if i > 3:
-                last_race_embed.add_field(name = "{}. {} {}".format(i,grid_result[i-1], emoji_list[grid_result[i-1]]), value = '\u200b', inline = False)
+                last_race_embed.add_field(name = "{}. {} | {}".format(i,grid_result[i-1], emoji_list[grid_result[i-1]]), value = '\u200b', inline = False)
 
         await ctx.send(embed = last_race_embed)
 
