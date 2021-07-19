@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import Embed
 import requests
 import json
+from graphics.emojis import Emoji
 
 class Standings(commands.Cog):
     def __init__(self, client):
@@ -10,13 +11,18 @@ class Standings(commands.Cog):
 
     @commands.command(name = "drivers-standings")
     async def drivers_standings(self, ctx):
-        d_standings = get_drivers_standings()
+        d_standings, abr_tab = get_drivers_standings()
         drivers_embed = Embed(title="Drivers Standings", description = "Current Drivers Standings", colour = 0x19c3e1)
+        em = Emoji()
+        emoji_list = em.data
         fields = []
         i = 1
         for driver in d_standings:
-            fields.append(("#"+str(i),driver, False))
+            fields.append(["#"+str(i),driver, False])
             i += 1
+        for j in range(len(abr_tab)):
+            fields[j][0] = "#{} | {}".format(str(j+1), emoji_list[abr_tab[j]])
+
         for text, value, inline in fields:
             drivers_embed.add_field(name = text, value = value, inline = inline)
 
@@ -44,15 +50,18 @@ def get_drivers_standings():
     my_json = response.text
     parsed = json.loads(my_json)
     d_standings = []
+    abr_tab = []
     for data in parsed["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]:
-
         constructor_name = data["Constructors"][0]["name"]
         family_name = data["Driver"]["familyName"]
         name = data["Driver"]["givenName"]
         points = data["points"]
 
-        d_standings.append("{} {} ({}) Points: {}".format(name, family_name, constructor_name, points))
-    return d_standings
+        abr = data["Driver"]["code"]
+        abr_tab.append(abr)
+
+        d_standings.append("{} {} ({}) | Points: {}".format(name, family_name, constructor_name, points))
+    return d_standings, abr_tab
 
 # returns two arrasys 1. constructor standings name 2. points of constructor 
 def get_constructor_standings():
