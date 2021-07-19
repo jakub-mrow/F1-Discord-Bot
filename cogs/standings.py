@@ -32,10 +32,12 @@ class Standings(commands.Cog):
     async def constructor_standings(self, ctx):
         c_standings_name, c_standings_points = get_constructor_standings()
         constructor_embed = Embed(title="Constructor Standings", description = "Current Constructor Standings", colour = 0x19c3e1)
+        em = Emoji()
+        emoji_list = em.data
         fields = []
         i = 1
         for constructor_name, constructor_points in zip(c_standings_name, c_standings_points):
-            fields.append(("#{} {}".format(str(i),constructor_name), constructor_points, False))
+            fields.append(("#{} {} | {}".format(str(i),constructor_name, emoji_list[constructor_name]), constructor_points, False))
             i += 1
         for text, value, inline in fields:
             constructor_embed.add_field(name = text, value = value, inline = inline)
