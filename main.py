@@ -3,6 +3,7 @@ import os
 from discord.embeds import Embed
 from discord.ext import commands
 
+#custom !help command class 
 class CustomHelp(commands.HelpCommand):
 
     def __init__(self):
