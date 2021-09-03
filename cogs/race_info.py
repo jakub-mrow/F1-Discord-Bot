@@ -72,9 +72,36 @@ class RaceInfo(commands.Cog):
 
         for text, value, inline in fields:
             next_race_embed.add_field(name = text, value = value, inline = inline)
-            
+
         if ctx.channel.id == 861575694143979520:
             await ctx.send(embed = next_race_embed)
+
+    @commands.command(name = "last-quali")
+    async def last_quali(self, ctx):
+        round_num = get_last_round() - 1
+        quali_times = get_quali_times(round_num + 1)
+        gp_name = get_gp_name(round_num)
+
+        last_quali_embed = Embed(title = "Last qualifying results!", description = "{}".format(gp_name), colour = 0x19c3e1)
+        fields = []
+        em = Emoji()
+        emoji_list = em.data
+
+        i = 1
+        for driver in quali_times:
+            quali_1 = quali_times[driver][0]
+            quali_2 = quali_times[driver][1]
+            quali_3 = quali_times[driver][2]
+            times = "Q1: {} Q2: {} Q3: {}".format(quali_1, quali_2, quali_3)
+            title = "#{} {} | {}".format(i, driver, emoji_list[driver])
+            fields.append((title, times, False))
+            i += 1
+
+        for text, value, inline in fields:
+            last_quali_embed.add_field(name = text, value = value, inline = inline)
+
+        if ctx.channel.id == 861575694143979520:
+            await ctx.send(embed = last_quali_embed)
 
 def setup(client):
     client.add_cog(RaceInfo(client))
@@ -192,3 +219,41 @@ def convert_time(time, offset):
         time_num = time_num - (offset - 2)
     time = "{}:{}".format(time_num, time.split(":")[1])
     return time
+
+def get_quali_times(round):
+    response = requests.get("http://ergast.com/api/f1/2021/{}/qualifying.json".format(round))
+    my_json = response.text
+    parsed = json.loads(my_json)
+    #print(json.dumps(parsed, indent=4, sort_keys=True))
+    data = {}
+    for item in parsed["MRData"]["RaceTable"]["Races"][0]["QualifyingResults"]:
+        driver_name = item["Driver"]["code"]
+        data[driver_name] = []
+        if "Q1" in item:
+            data[driver_name].append(item["Q1"])
+        if "Q2" in item:
+            data[driver_name].append(item["Q2"])
+        if "Q3" in item:
+            data[driver_name].append(item["Q3"])
+        else:
+            if len(data[driver_name]) == 1:
+                for _ in range(2):
+                    data[driver_name].append("--")
+            else:
+                data[driver_name].append("--")
+    return data
+
+def get_last_round():
+    response = requests.get("http://ergast.com/api/f1/current/last/results.json")
+    my_json = response.text
+    parsed = json.loads(my_json)
+    round_num = int(parsed["MRData"]["RaceTable"]["Races"][0]["round"])
+    return round_num
+
+# returns name of Grand Prix
+def get_gp_name(round_num):
+    response = requests.get("http://ergast.com/api/f1/current.json")
+    my_json = response.text
+    parsed = json.loads(my_json)
+    gp_name = parsed["MRData"]["RaceTable"]["Races"][round_num]["raceName"]
+    return gp_name
