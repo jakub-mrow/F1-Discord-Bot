@@ -45,7 +45,8 @@ class RaceInfo(commands.Cog):
             if i > 3:
                 last_race_embed.add_field(name = "{}. {} | {}".format(i,grid_result[i-1], emoji_list[grid_result[i-1]]), value = '\u200b', inline = False)
 
-        await ctx.send(embed = last_race_embed)
+        if ctx.channel.id == 861575694143979520:
+            await ctx.send(embed = last_race_embed)
 
 
     @commands.command(name = "next-race")
@@ -71,7 +72,9 @@ class RaceInfo(commands.Cog):
 
         for text, value, inline in fields:
             next_race_embed.add_field(name = text, value = value, inline = inline)
-        await ctx.send(embed = next_race_embed)
+            
+        if ctx.channel.id == 861575694143979520:
+            await ctx.send(embed = next_race_embed)
 
 def setup(client):
     client.add_cog(RaceInfo(client))

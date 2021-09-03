@@ -26,7 +26,8 @@ class Standings(commands.Cog):
         for text, value, inline in fields:
             drivers_embed.add_field(name = text, value = value, inline = inline)
 
-        await ctx.send(embed = drivers_embed)
+        if ctx.channel.id == 861575694143979520:
+            await ctx.send(embed = drivers_embed)
         
     @commands.command(name = "constructor-standings")
     async def constructor_standings(self, ctx):
@@ -41,7 +42,9 @@ class Standings(commands.Cog):
             i += 1
         for text, value, inline in fields:
             constructor_embed.add_field(name = text, value = value, inline = inline)
-        await ctx.send(embed = constructor_embed)
+
+        if ctx.channel.id == 861575694143979520:
+            await ctx.send(embed = constructor_embed)
 
 def setup(client):
     client.add_cog(Standings(client))
