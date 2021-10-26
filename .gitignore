@@ -1,3 +1,4 @@
-*.txt
+database.txt
+token.txt
 .vscode/
-venv/
+env/

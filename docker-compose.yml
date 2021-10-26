@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  f1bot:
+    build:
+      context: .
+      dockerfile: docker/f1bot.dockerfile
+    container_name: f1bot
+    command: ["python", "main.py"]
+    restart: unless-stopped

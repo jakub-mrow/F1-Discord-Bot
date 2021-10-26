@@ -120,7 +120,6 @@ for driver in quali:
     quali_2 = quali[driver][1]
     quali_3 = quali[driver][2]
     times = "Q1: {} Q2: {} Q3: {}".format(quali_1, quali_2, quali_3)
-    #print(times)
 
 # returns name of Grand Prix
 def get_gp_name(round_num):
@@ -130,4 +129,4 @@ def get_gp_name(round_num):
     gp_name = parsed["MRData"]["RaceTable"]["Races"][round_num]["raceName"]
     return gp_name
 
-get_gp_name(10)
+#get_gp_name(10)

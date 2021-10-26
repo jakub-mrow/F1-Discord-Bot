@@ -1,0 +1,4 @@
+beautifulsoup4==4.9.3
+requests==2.26.0
+discord.py==1.7.3
+mysql-connector==2.2.9
