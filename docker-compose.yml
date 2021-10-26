@@ -1,9 +1,11 @@
-version: "3.7"
+version: "3.9"
 services:
   f1bot:
     build:
       context: .
       dockerfile: docker/f1bot.dockerfile
+    env_file:
+      - .env
     container_name: f1bot
     command: ["python", "main.py"]
     restart: unless-stopped
