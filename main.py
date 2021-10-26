@@ -32,9 +32,7 @@ class CustomHelp(commands.HelpCommand):
 
 
 def read_token():
-    with open("token.txt", "r") as file:
-        lines = file.readlines()
-        return lines[0].strip()
+    return os.getenv("TOKEN")
 
 TOKEN = read_token()
 client = commands.Bot(command_prefix='!', help_command=CustomHelp())
