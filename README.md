@@ -22,3 +22,7 @@ All of the data about races is gathered from Ergast Developer API - http://ergas
 * requests
 * discord.py
 * BeautifulSoup
+
+## Docker and docker-compose
+
+This bot on my discord server is running in docker container on local raspberry pi 24/7.
