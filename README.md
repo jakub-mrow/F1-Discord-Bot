@@ -1,5 +1,7 @@
 # Formula 1 Discord Bot 
 
+Join the server and try it out for yourself: https://discord.gg/kcBUXGfR
+
 This project allows you to write commands to discord bot which sends back the most important information about latest Formula 1 events inlcuding:
 * last race results ⟶ !last-race
 * last quailfying results ⟶ !last-quali

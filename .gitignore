@@ -1,5 +1,5 @@
 database.txt
 token.txt
 .vscode/
-env/
 .env
+_pycache__/
