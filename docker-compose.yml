@@ -7,5 +7,5 @@ services:
     env_file:
       - .env
     container_name: f1bot
-    command: ["python", "main.py"]
+    command: ["python", "-u", "main.py"]
     restart: unless-stopped

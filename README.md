@@ -1,5 +1,7 @@
 # Formula 1 Discord Bot 
 
+Due to the off season, the bot is disabled. Feel free to come back when the F1 2022 season starts.
+
 Join the server and try it out for yourself: https://discord.gg/kcBUXGfR
 
 This project allows you to write commands to discord bot which sends back the most important information about latest Formula 1 events inlcuding:
@@ -18,6 +20,9 @@ This project allows you to write commands to discord bot which sends back the mo
 
 # Technologies
 All of the data about races is gathered from Ergast Developer API - http://ergast.com/mrd/
+- python
+- docker
+- docker-compose
 ## Python modules
 * requests
 * discord.py

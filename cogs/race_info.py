@@ -143,6 +143,9 @@ def get_last_race():
 
 # web scraping times of race, quali, practices from f1 site 
 def get_weekend_timings(race_name):
+    # temporary fix for not working Saudi Arabia next-race command
+    if race_name == "Saudi Arabia":
+        race_name = "Saudi_Arabia"
     URL = "https://www.formula1.com/en/racing/2021/"+race_name+".html"
     #URL = "https://www.formula1.com/en/racing/2021/Great_Britain.html"
     page = requests.get(URL)
@@ -170,8 +173,12 @@ def get_weekend_timings(race_name):
             joined = "-".join(splitted)
 
             info_time = soup.find("div", class_= racing)
-            start = info_time["data-start-time"].split("T")
-            end = info_time["data-end-time"].split("T")
+            print(info_time)
+            # start = info_time["data-start-time"].split("T")
+            # end = info_time["data-end-time"].split("T")
+            start = info_time["start-time"].split("T")
+            end = info_time["end-time"].split("T")
+
             offset = info_time["data-gmt-offset"]
 
             if joined not in data:
