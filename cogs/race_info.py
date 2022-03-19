@@ -6,6 +6,7 @@ import json
 from graphics.emojis import Emoji
 from bs4 import BeautifulSoup
 
+YEAR = 2022
 class RaceInfo(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -13,7 +14,7 @@ class RaceInfo(commands.Cog):
     @commands.command(name = "schedule")
     async def schedule(self, ctx):
         data = get_schedule()
-        schedule_embed = Embed(title = "2021 Race Schedule", description = ':date: :date: :date:', colour = 0x19c3e1)
+        schedule_embed = Embed(title = f"{YEAR} Race Schedule", description = ':date: :date: :date:', colour = 0x19c3e1)
         fields = []
         for key, value in data.items():
             race_name = data[key][1]
@@ -108,7 +109,7 @@ def setup(client):
 
 # returns schedule of current year
 def get_schedule():
-    response = requests.get("http://ergast.com/api/f1/current.json")
+    response = requests.get(f"http://ergast.com/api/f1/{YEAR}.json")
     my_json = response.text
     parsed = json.loads(my_json)
     data = {}

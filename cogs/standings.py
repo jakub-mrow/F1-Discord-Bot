@@ -1,10 +1,12 @@
 import discord
+import os
 from discord.ext import commands
 from discord import Embed
 import requests
 import json
 from graphics.emojis import Emoji
 
+YEAR=2022
 class Standings(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -51,13 +53,13 @@ def setup(client):
 
 # returns drivers standings
 def get_drivers_standings():
-    response = requests.get("http://ergast.com/api/f1/current/driverStandings.json")
+    response = requests.get(f"http://ergast.com/api/f1/{YEAR}/driverStandings.json")
     my_json = response.text
     parsed = json.loads(my_json)
     d_standings = []
     abr_tab = []
     for data in parsed["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]:
-        constructor_name = data["Constructors"][0]["name"]
+        #constructor_name = data["Constructors"][0]["name"]
         family_name = data["Driver"]["familyName"]
         name = data["Driver"]["givenName"]
         points = data["points"]
@@ -65,12 +67,12 @@ def get_drivers_standings():
         abr = data["Driver"]["code"]
         abr_tab.append(abr)
 
-        d_standings.append("{} {} ({}) | Points: {}".format(name, family_name, constructor_name, points))
+        d_standings.append("{} {} | Points: {}".format(name, family_name, points))
     return d_standings, abr_tab
 
 # returns two arrasys 1. constructor standings name 2. points of constructor 
 def get_constructor_standings():
-    response = requests.get("http://ergast.com/api/f1/current/constructorStandings.json")
+    response = requests.get(f"http://ergast.com/api/f1/{YEAR}/constructorStandings.json")
     my_json = response.text
     parsed = json.loads(my_json)
     c_standings_name = []
