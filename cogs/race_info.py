@@ -148,7 +148,6 @@ def get_weekend_timings(race_name):
     if race_name == "Saudi Arabia":
         race_name = "Saudi_Arabia"
     URL = "https://www.formula1.com/en/racing/2021/"+race_name+".html"
-    #URL = "https://www.formula1.com/en/racing/2021/Great_Britain.html"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
     weekend_rounds = ["row js-race", "row js-qualifying","row js-practice-3","row js-practice-2", "row js-practice-1"]
@@ -174,7 +173,6 @@ def get_weekend_timings(race_name):
             joined = "-".join(splitted)
 
             info_time = soup.find("div", class_= racing)
-            print(info_time)
             # start = info_time["data-start-time"].split("T")
             # end = info_time["data-end-time"].split("T")
             start = info_time["start-time"].split("T")
@@ -229,7 +227,7 @@ def convert_time(time, offset):
     return time
 
 def get_quali_times(round):
-    response = requests.get("http://ergast.com/api/f1/2021/{}/qualifying.json".format(round))
+    response = requests.get("http://ergast.com/api/f1/{}/{}/qualifying.json".format(YEAR, round))
     my_json = response.text
     parsed = json.loads(my_json)
     #print(json.dumps(parsed, indent=4, sort_keys=True))
