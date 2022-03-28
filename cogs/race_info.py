@@ -147,7 +147,7 @@ def get_weekend_timings(race_name):
     # temporary fix for not working Saudi Arabia next-race command
     if race_name == "Saudi Arabia":
         race_name = "Saudi_Arabia"
-    URL = "https://www.formula1.com/en/racing/2021/"+race_name+".html"
+    URL = f"https://www.formula1.com/en/racing/{YEAR}/"+race_name+".html"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
     weekend_rounds = ["row js-race", "row js-qualifying","row js-practice-3","row js-practice-2", "row js-practice-1"]
@@ -172,11 +172,13 @@ def get_weekend_timings(race_name):
             splitted = racing.split("-")[1:]
             joined = "-".join(splitted)
 
-            info_time = soup.find("div", class_= racing)
-            # start = info_time["data-start-time"].split("T")
-            # end = info_time["data-end-time"].split("T")
-            start = info_time["start-time"].split("T")
-            end = info_time["end-time"].split("T")
+            info_time = soup.find("div", class_=racing)
+            start = info_time["data-start-time"].split("T")
+            end = info_time["data-end-time"].split("T")
+
+            # Alternative way if the site is changed
+            #start = info_time["start-time"].split("T")
+            # end = info_time["end-time"].split("T")
 
             offset = info_time["data-gmt-offset"]
 
